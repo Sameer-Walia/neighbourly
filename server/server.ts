@@ -25,8 +25,8 @@ app.use(express.json());
 
 const port = 5555
 
-mongoose.connect('mongodb://127.0.0.1:27017/airtaskerdb_typescript').then(() => console.log('Connected to MongoDB'));
-// mongoose.connect(process.env.MONGO_URL!).then(() => console.log('Connected to MongoDB'));
+// mongoose.connect('mongodb://127.0.0.1:27017/airtaskerdb_typescript').then(() => console.log('Connected to MongoDB'));
+mongoose.connect(process.env.MONGO_URL!).then(() => console.log('Connected to MongoDB'));
 
 import cookieParser from "cookie-parser"
 app.use(cookieParser());
