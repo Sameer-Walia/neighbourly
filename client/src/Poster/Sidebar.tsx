@@ -5,7 +5,9 @@ import { useSelector } from "react-redux";
 import type { Rootstate } from "../store";
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:5555");
+const socket = io(import.meta.env.VITE_API_URL, {
+    withCredentials: true,
+});
 
 function Sidebar()
 {
