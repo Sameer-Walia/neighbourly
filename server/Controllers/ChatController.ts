@@ -49,12 +49,22 @@ export const chat_history = async (req: Request, res: Response) =>
 {
     const { userid, taskerid } = req.query;
 
+    if (typeof userid !== "string" || typeof taskerid !== "string")
+    {
+        return res.status(400).send({
+            statuscode: 0,
+            message: "userid and taskerid are required"
+        });
+    }
+
     const chat = await ChatModel.findOne({
         $or: [
-            { userid: userid, taskerid: taskerid },
+            { userid, taskerid },
             { userid: taskerid, taskerid: userid }
         ]
     });
+
+
 
     res.json(chat ? chat.messages : []);
 }
@@ -64,7 +74,23 @@ export const user_chat_with_all_tasker = async (req: Request, res: Response) =>
 {
     try
     {
-        const result = await ChatModel.find({ $or: [{ userid: req.query.userid }, { taskerid: req.query.userid }] }).populate("taskerid");;
+        const { userid } = req.query;
+
+        if (typeof userid !== "string")
+        {
+            return res.status(400).send({
+                statuscode: 0,
+                message: "userid is required"
+            });
+        }
+
+        const result = await ChatModel.find({
+            $or: [
+                { userid },
+                { taskerid: userid }
+            ]
+        }).populate("taskerid");
+
         if (result.length === 0)
         {
             res.send({ statuscode: 0 })
@@ -86,7 +112,22 @@ export const tasker_chat_with_all_user = async (req: Request, res: Response) =>
 {
     try
     {
-        const result = await ChatModel.find({ $or: [{ taskerid: req.query.taskerid }, { userid: req.query.taskerid }] }).populate("userid");;
+        const { taskerid } = req.query;
+
+        if (typeof taskerid !== "string")
+        {
+            return res.status(400).send({
+                statuscode: 0,
+                message: "taskerid is required"
+            });
+        }
+
+        const result = await ChatModel.find({
+            $or: [
+                { taskerid },
+                { userid: taskerid }
+            ]
+        }).populate("userid");
         if (result.length === 0)
         {
             res.send({ statuscode: 0 })

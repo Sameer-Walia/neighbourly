@@ -9,7 +9,7 @@ export const forgotpassword = async (req: Request, res: Response) =>
 {
     try 
     {
-        const result = await SignupModel.findOne({ email: req.query.un })
+        const result = await SignupModel.findOne({ email: String(req.query.un)  })
         console.log(result)
         if (result === null)
         {
@@ -69,7 +69,7 @@ export const checktoken = async (req: Request, res: Response) =>
 
     try
     {
-        const result = await restPassModel.findOne({ token: req.query.token })
+        const result = await restPassModel.findOne({ token: String(req.query.token) })
         console.log(result)
         {
             if (result === null)
@@ -85,7 +85,7 @@ export const checktoken = async (req: Request, res: Response) =>
                 else
                 {
                     // delete Token after it get expired
-                    const result2 = await restPassModel.deleteOne({ token: req.query.token })
+                    const result2 = await restPassModel.deleteOne({ token: String(req.query.token) })
                     if (result2.deletedCount === 1) 
                     {
                         res.send({ statuscode: 0 })

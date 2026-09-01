@@ -137,7 +137,7 @@ export const fetchalltaskers = async (req: Request, res: Response) =>
 {
     try
     {
-        const result = await GetTaskModel.find({ taskid: req.query.taskid }).populate('taskid');
+        const result = await GetTaskModel.find({ taskid: String(req.query.taskid) }).populate('taskid');
         if (result.length === 0) 
         {
             res.send({ statuscode: 0 })
