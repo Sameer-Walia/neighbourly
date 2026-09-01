@@ -7,21 +7,26 @@ import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
+dotenv.config();
+
 const app = express();
 
-app.use(cors(
-    {
+app.use(
+    cors({
         origin: process.env.CLIENT_URL,
-        credentials: true
-    }
-));
+        credentials: true,
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+    })
+);
+
+
 app.use(express.json());
-dotenv.config();
 
 const port = 5555
 
-// mongoose.connect('mongodb://127.0.0.1:27017/airtaskerdb_typescript').then(() => console.log('Connected to MongoDB'));
-mongoose.connect(process.env.MONGO_URL!).then(() => console.log('Connected to MongoDB'));
+mongoose.connect('mongodb://127.0.0.1:27017/airtaskerdb_typescript').then(() => console.log('Connected to MongoDB'));
+// mongoose.connect(process.env.MONGO_URL!).then(() => console.log('Connected to MongoDB'));
 
 import cookieParser from "cookie-parser"
 app.use(cookieParser());
@@ -37,11 +42,13 @@ interface TypingPayload
     sender: string;
 }
 
+
 export const io = new Server(server, {
     cors: {
         origin: process.env.CLIENT_URL,
-        methods: ["GET", "POST"]
-    }
+        methods: ["GET", "POST"],
+        credentials: true,
+    },
 });
 
 io.on("connection", (socket: Socket) =>    

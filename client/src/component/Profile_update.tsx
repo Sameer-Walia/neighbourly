@@ -42,7 +42,7 @@ function Profile_update()
         setloading(true)
         try
         {
-            const resp = await axios.get<{ statuscode: number, oneuserdata?: User }>(`${import.meta.env.VITE_API_URL}/api/fetchoneuserdata/${email}`)
+            const resp = await axios.get<{ statuscode: number, oneuserdata?: User }>(`${import.meta.env.VITE_API_URL}/api/fetchoneuserdata/${email}` , { withCredentials: true })
 
             if (resp.data.statuscode === 1 && resp.data.oneuserdata) 
             {

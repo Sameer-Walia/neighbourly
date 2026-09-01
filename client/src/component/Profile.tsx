@@ -43,13 +43,13 @@ function Profile()
     {
         try
         {
-            const resp = await axios.get<{ statuscode: number, oneuserdata?: User }>(`${import.meta.env.VITE_API_URL}/api/fetchoneuserdata/${email}`)
+            const resp = await axios.get<{ statuscode: number, oneuserdata?: User }>(`${import.meta.env.VITE_API_URL}/api/fetchoneuserdata/${email}` , {withCredentials: true});
             if (resp.data.statuscode === 1 && resp.data.oneuserdata)
             {
                 const user: User = resp.data.oneuserdata;
-                setname(user.name);
-                setphone(user.phone);
-                setaddress(user.address);
+                setname(user?.name || "");
+                setphone(user?.phone || "");
+                setaddress(user?.address || "");
             }
             else if (resp.data.statuscode === 0)
             {
