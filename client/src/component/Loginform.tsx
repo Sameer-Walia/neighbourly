@@ -145,7 +145,7 @@ function Loginform()
     return (
         <div>
             {/* <form onSubmit={onlogin} className="register-form mt-5"> */}
-            <form onSubmit={(e) => onlogin(e)} className="register-form m-5">
+            <form onSubmit={(e) => onlogin(e)} className="register-form mt-5">
 
                 <div className="input-container mt-5 ">
 
