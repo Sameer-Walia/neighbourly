@@ -12,7 +12,7 @@ function Home()
     return (
         <div id='home'>
             <header className="header">
-                <div className="overlay">
+                <div className="overlay mt-5">
                     <h1 className="title">Find Trusted Local Help for Any Task</h1>
                     <p className="descript">Post a task and connect with skilled workers in your neighborhood.</p>
                     <input type="text" placeholder="What do you need help with?" className="input" />
